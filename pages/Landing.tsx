@@ -75,23 +75,20 @@ const Landing: React.FC = () => {
           <span className="text-gray-300">Efficiently.</span>
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
-          LHKFBIFEBI tool for university students. 
-          Sync schedules, define goals, and generate your team's home base in minutes.
+          A tool specifically designed for university group projects.<br /> 
+          Sync schedules, define goals, and generate your team's ground rules.
         </p>
         
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 text-sm text-gray-500">
             <div className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-brand-green" />
-                <span>Mobile Friendly</span>
+                <span>Free</span>
             </div>
             <div className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-brand-green" />
                 <span>No Login Required</span>
             </div>
-            <div className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-brand-green" />
-                <span>Free Forever</span>
-            </div>
+            
         </div>
       </div>
 
