@@ -1,3 +1,4 @@
+
 export interface Group {
   id: string;
   code: string;
@@ -31,6 +32,7 @@ export interface Questionnaire {
   // 1. Goals (1.0 - 4.0 mapped internally to 4-1 scale for calculation or just display)
   // Let's keep 1=Low Ambition (4.0), 4=High Ambition (1.0) for conflict logic compatibility
   expectationLevel: number; 
+  realisticExpectation: number; // New field for realistic grade
   // 2. Grade vs Learning (1-5)
   gradeVsLearning: number;
   // 3. Uni Experience (1-5)

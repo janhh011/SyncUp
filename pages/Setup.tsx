@@ -19,6 +19,7 @@ const Setup: React.FC = () => {
   // Form State
   // Default to index 6 -> Grade 2.0
   const [expectationIndex, setExpectationIndex] = useState(6); 
+  const [realisticIndex, setRealisticIndex] = useState(6); // New Realistic Grade
   
   const [gradeVsLearning, setGradeVsLearning] = useState(3); // 1-5
   const [projectExperience, setProjectExperience] = useState(3); // 1-5
@@ -30,7 +31,7 @@ const Setup: React.FC = () => {
 
   // New Fields
   const [meetingFrequency, setMeetingFrequency] = useState('1x / week');
-  const [projectMethodology, setProjectMethodology] = useState('Flexible');
+  const [projectMethodology, setProjectMethodology] = useState('No Preference');
 
   // Skill Builder State
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -53,7 +54,8 @@ const Setup: React.FC = () => {
     setLoading(true);
     try {
       await submitQuestionnaire(user.id, {
-        expectationLevel: GRADE_STEPS[expectationIndex], // Submit the actual float value
+        expectationLevel: GRADE_STEPS[expectationIndex],
+        realisticExpectation: GRADE_STEPS[realisticIndex],
         gradeVsLearning,
         projectExperience,
         weeklyHours,
@@ -76,6 +78,7 @@ const Setup: React.FC = () => {
   };
 
   const currentGrade = GRADE_STEPS[expectationIndex];
+  const realisticGrade = GRADE_STEPS[realisticIndex];
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-10">
@@ -95,10 +98,10 @@ const Setup: React.FC = () => {
             <h2>Goals & Expectations</h2>
           </div>
 
-          {/* Q1: Grade Expectation (German System) */}
+          {/* Q1: Grade Expectation (Aim) */}
           <div>
              <label className="block text-sm font-bold text-gray-700 mb-4">
-               1. What grade are you aiming for? (realistically) <span className="text-brand-green text-lg ml-2">{currentGrade.toFixed(1)}</span>
+               1. What grade are you aiming for? <span className="text-brand-green text-lg ml-2">{currentGrade.toFixed(1)}</span>
              </label>
              <div className="px-2">
                 <input 
@@ -116,9 +119,30 @@ const Setup: React.FC = () => {
              </div>
           </div>
 
-          {/* Q2: Grade vs Learning */}
+          {/* Q2: Realistic Expectation */}
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-4">2. What matters more to you?</label>
+             <label className="block text-sm font-bold text-gray-700 mb-4">
+               2. Which grade do you think is realistic? <span className="text-gray-500 text-lg ml-2">{realisticGrade.toFixed(1)}</span>
+             </label>
+             <div className="px-2">
+                <input 
+                  type="range" min="0" max="9" step="1"
+                  value={realisticIndex}
+                  onChange={(e) => setRealisticIndex(parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-gray-500"
+                />
+                <div className="flex justify-between text-xs font-medium text-gray-500 mt-2">
+                   <span className={realisticGrade === 4.0 ? 'text-black font-bold' : ''}>4.0</span>
+                   <span className={realisticGrade === 3.0 ? 'text-black font-bold' : ''}>3.0</span>
+                   <span className={realisticGrade === 2.0 ? 'text-black font-bold' : ''}>2.0</span>
+                   <span className={realisticGrade === 1.0 ? 'text-black font-bold' : ''}>1.0</span>
+                </div>
+             </div>
+          </div>
+
+          {/* Q3: Grade vs Learning */}
+          <div>
+             <label className="block text-sm font-bold text-gray-700 mb-4">3. What matters more to you?</label>
              <div className="px-2">
                 <input 
                   type="range" min="1" max="5" step="1"
@@ -134,9 +158,9 @@ const Setup: React.FC = () => {
              </div>
           </div>
 
-          {/* Q3: Experience Level */}
+          {/* Q4: Experience Level */}
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-4">3. Experience with Uni Group Projects</label>
+             <label className="block text-sm font-bold text-gray-700 mb-4">4. Experience with Uni Group Projects</label>
              <div className="px-2">
                 <input 
                   type="range" min="1" max="5" step="1"
@@ -151,9 +175,9 @@ const Setup: React.FC = () => {
              </div>
           </div>
 
-           {/* Q4: Hours per week */}
+           {/* Q5: Hours per week */}
            <div>
-             <label className="block text-sm font-bold text-gray-700 mb-2">4. Hours per week willing to commit</label>
+             <label className="block text-sm font-bold text-gray-700 mb-2">5. Hours per week willing to commit</label>
              <div className="flex items-center gap-4">
                <input 
                  type="number" 
@@ -176,13 +200,15 @@ const Setup: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">5. Preferred Meeting Frequency</label>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">6. Preferred Meeting Frequency</label>
                     <select 
                         className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-brand-black focus:outline-none focus:border-brand-black"
                         value={meetingFrequency}
                         onChange={(e) => setMeetingFrequency(e.target.value)}
                     >
                         <option value="As needed">As needed</option>
+                        <option value="1x / month">1x / month</option>
+                        <option value="2x / month">2x / month</option>
                         <option value="1x / week">1x / week</option>
                         <option value="2x / week">2x / week</option>
                         <option value="3x / week">3x / week</option>
@@ -191,12 +217,13 @@ const Setup: React.FC = () => {
                 </div>
 
                 <div>
-                    <label className="block text-sm font-bold text-gray-700 mb-2">6. Preferred Project Structure</label>
+                    <label className="block text-sm font-bold text-gray-700 mb-2">7. Preferred Project Structure <span className="font-normal text-gray-400">(Optional)</span></label>
                     <select 
                         className="w-full px-4 py-3 rounded-lg border-2 border-gray-200 bg-white text-brand-black focus:outline-none focus:border-brand-black"
                         value={projectMethodology}
                         onChange={(e) => setProjectMethodology(e.target.value)}
                     >
+                        <option value="No Preference">No Preference</option>
                         <option value="Flexible">Flexible / Ad-hoc</option>
                         <option value="Agile / Scrum">Agile / Scrum</option>
                         <option value="Kanban">Kanban</option>
@@ -216,7 +243,7 @@ const Setup: React.FC = () => {
           </div>
 
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-2">7. Prior Group Projects (Takeaways)</label>
+             <label className="block text-sm font-bold text-gray-700 mb-2">8. Prior Group Projects (Takeaways)</label>
              <p className="text-xs text-gray-500 mb-2">Share a key takeaway or something you want to do differently this time.</p>
              <textarea 
                 className="w-full p-3 border rounded-lg text-sm bg-gray-50 focus:bg-white transition-colors outline-none focus:ring-1 ring-brand-black"
@@ -228,7 +255,7 @@ const Setup: React.FC = () => {
           </div>
 
           <div>
-             <label className="block text-sm font-bold text-gray-700 mb-2">8. Why did you take this course?</label>
+             <label className="block text-sm font-bold text-gray-700 mb-2">9. Why did you take this course?</label>
              <textarea 
                 className="w-full p-3 border rounded-lg text-sm bg-gray-50 focus:bg-white transition-colors outline-none focus:ring-1 ring-brand-black"
                 rows={3}
@@ -243,7 +270,7 @@ const Setup: React.FC = () => {
         <section className="space-y-6 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
           <div className="flex items-center gap-2 text-lg font-semibold border-b pb-2">
             <Hammer size={20} className="text-brand-green" />
-            <h2>9. Skills & Role</h2>
+            <h2>10. Skills & Role</h2>
           </div>
 
           <div className="space-y-4">
@@ -306,7 +333,7 @@ const Setup: React.FC = () => {
             <h2>Weekly Availability</h2>
           </div>
           <p className="text-sm text-gray-500">Drag to paint your free times (for meetings).</p>
-          <div className="border rounded-xl p-4 overflow-hidden">
+          <div className="border rounded-xl p-4">
              <TimeGrid value={availabilityJson} onChange={setAvailabilityJson} />
           </div>
         </section>

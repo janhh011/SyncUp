@@ -49,8 +49,8 @@ const TimeGrid: React.FC<TimeGridProps> = ({ value, onChange, readOnly = false }
   }, []);
 
   return (
-    <div className="select-none overflow-x-auto pb-4">
-      <div className="min-w-[600px]">
+    <div className="select-none overflow-x-auto pb-4 w-full">
+      <div className="w-full min-w-[500px]">
         {/* Header Days */}
         <div className="grid grid-cols-[50px_repeat(7,1fr)] gap-1 mb-2">
           <div className="text-xs text-gray-400 font-medium self-end pb-1 text-right pr-2">GMT</div>

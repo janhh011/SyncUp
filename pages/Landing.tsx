@@ -68,7 +68,7 @@ const Landing: React.FC = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-6 py-12 md:py-16 min-h-[calc(100vh-80px)] flex flex-col justify-center">
+    <div className="max-w-6xl mx-auto px-6 py-12 md:py-16 min-h-[calc(100vh-80px)] flex flex-col justify-center">
       <div className="text-center mb-12">
         <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-8 leading-[1.1]">
           Kick-off your Group Project.<br />
@@ -110,7 +110,7 @@ const Landing: React.FC = () => {
         </div>
       )}
 
-      <div className="max-w-md mx-auto bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden relative z-10 w-full">
+      <div className="max-w-md mx-auto bg-white border border-gray-200 shadow-2xl rounded-2xl overflow-hidden relative z-10 w-full mb-24">
         <div className="flex border-b border-gray-100">
           <button 
             className={`flex-1 py-4 font-semibold text-sm transition-colors ${activeTab === 'create' ? 'bg-gray-50 text-brand-black' : 'bg-white text-gray-400 hover:text-gray-600'}`}
@@ -177,8 +177,101 @@ const Landing: React.FC = () => {
         </div>
       </div>
       
+      {/* Workflow Visualization Section (Added) */}
+      <div className="mb-24 mt-8 border-t border-gray-100 pt-16">
+        <div className="text-center mb-12">
+          <h2 className="text-2xl font-bold text-gray-900">How it works</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Step 1 */}
+            <div className="flex flex-col gap-6 group">
+                <div className="aspect-square bg-gray-50 rounded-2xl border border-gray-200 p-6 flex flex-col items-center justify-center relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm z-10 transform group-hover:scale-105 transition-transform duration-300">
+                        <div className="h-2 w-12 bg-gray-200 rounded mb-4"></div>
+                        <div className="text-2xl font-mono font-bold text-center tracking-widest mb-2 text-gray-800">X7K9</div>
+                        <div className="h-8 bg-brand-black rounded w-full flex items-center justify-center text-white text-[10px] font-bold tracking-wide">ENTER CODE</div>
+                    </div>
+                    <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div className="text-center">
+                    <div className="w-8 h-8 bg-brand-black text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">1</div>
+                    <h3 className="font-bold text-lg">Join Lobby</h3>
+                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">Create a group and share the code. No sign-up needed.</p>
+                </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="flex flex-col gap-6 group">
+                <div className="aspect-square bg-gray-50 rounded-2xl border border-gray-200 p-6 flex flex-col items-center justify-center relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm z-10 transform group-hover:scale-105 transition-transform duration-300">
+                         <div className="flex justify-between text-[10px] font-bold text-gray-400 mb-2">
+                            <span>GOAL</span>
+                            <span className="text-brand-green">1.3</span>
+                         </div>
+                         <div className="h-2 bg-gray-100 rounded-full mb-3 overflow-hidden">
+                            <div className="h-full w-3/4 bg-brand-green"></div>
+                         </div>
+                         <div className="flex gap-1">
+                            <div className="h-4 w-10 bg-gray-100 rounded"></div>
+                            <div className="h-4 w-14 bg-gray-100 rounded"></div>
+                         </div>
+                    </div>
+                    <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div className="text-center">
+                    <div className="w-8 h-8 bg-brand-black text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">2</div>
+                    <h3 className="font-bold text-lg">Quick Check-in</h3>
+                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">Members input goals, skills, and availability in 2 mins.</p>
+                </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="flex flex-col gap-6 group">
+                <div className="aspect-square bg-gray-50 rounded-2xl border border-gray-200 p-6 flex flex-col items-center justify-center relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                     <div className="w-full bg-white border border-gray-200 rounded-xl p-3 shadow-sm z-10 transform group-hover:scale-105 transition-transform duration-300 space-y-2">
+                        <div className="bg-red-50 text-red-600 text-[9px] font-bold p-1.5 rounded border border-red-100 flex items-center gap-1.5">
+                            <div className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></div>
+                            Goal Mismatch
+                        </div>
+                        <div className="grid grid-cols-5 gap-1 opacity-60">
+                            {[1,1,0,1,1, 1,1,1,0,0, 0,1,1,1,0].map((x,i) => (
+                                <div key={i} className={`h-2 rounded-[1px] ${x ? 'bg-brand-green' : 'bg-gray-200'}`}></div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div className="text-center">
+                    <div className="w-8 h-8 bg-brand-black text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">3</div>
+                    <h3 className="font-bold text-lg">Align & Define</h3>
+                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">Visualize overlaps, assign roles, and resolve conflicts early.</p>
+                </div>
+            </div>
+
+            {/* Step 4 */}
+             <div className="flex flex-col gap-6 group">
+                <div className="aspect-square bg-gray-50 rounded-2xl border border-gray-200 p-6 flex flex-col items-center justify-center relative overflow-hidden hover:shadow-lg transition-all duration-300">
+                    <div className="w-full bg-white border border-gray-200 rounded-xl p-4 shadow-sm z-10 transform group-hover:scale-105 transition-transform duration-300 text-center">
+                         <div className="w-8 h-8 bg-black text-white rounded flex items-center justify-center font-bold text-xs mx-auto mb-2">N</div>
+                         <div className="text-[9px] font-bold text-gray-400 mb-3 tracking-wider">PROJECT HOME</div>
+                         <div className="h-6 border border-brand-green text-brand-green text-[8px] font-bold rounded flex items-center justify-center uppercase tracking-wide">
+                            Copy to Notion
+                         </div>
+                    </div>
+                    <div className="absolute inset-0 bg-brand-green/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div className="text-center">
+                    <div className="w-8 h-8 bg-brand-black text-white rounded-full flex items-center justify-center font-bold mx-auto mb-3 text-sm">4</div>
+                    <h3 className="font-bold text-lg">Export & Launch</h3>
+                    <p className="text-gray-500 text-sm mt-2 leading-relaxed">Generate your team charter and export to Notion, Jira or PDF.</p>
+                </div>
+            </div>
+        </div>
+      </div>
+      
       {/* Research Backing Section */}
-      <div className="mt-24 pt-10 border-t border-gray-100">
+      <div className="mt-10 pt-10 border-t border-gray-100">
         <div className="text-center mb-10">
           <h2 className="text-xs font-bold text-brand-green uppercase tracking-widest mb-2">Based on research</h2>
           <h3 className="text-3xl font-bold">Why the "Forming" stage matters</h3>
